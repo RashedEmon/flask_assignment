@@ -1,0 +1,13 @@
+{% block header %}
+    <header class="flex justify-between px-5 py-3 bg-[#22577E] text-white text-[25px]">
+        <div class="cursor-pointer">Home</div>
+        {% if current_user.authenticated%}
+            <form action="/logout" method="get">
+                <button type="submit" >
+                    <div class="px-3 py-1 bg-orange-700 rounded-lg cursor-pointer">Logout</div>
+                </button>
+            </form>
+        {% endif %}
+        
+    </header>
+{% endblock header %}

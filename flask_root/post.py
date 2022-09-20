@@ -1,31 +1,22 @@
+#Related third party imports.
 from flask_httpauth import HTTPDigestAuth, HTTPTokenAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
+from flask_login import login_required
+#Local application specific imports.
+from flask_root.data import todos
 
-todos = [
-        {
-        'id': '1',
-        'title': 'Learn python'
-        },
-        {
-        'id': '2',
-        'title': 'Learn Nodejs'
-        },
-        {
-        'id': '3',
-        'title': 'Learn Flask'
-        },
 
-    ]
 
 post_bp = Blueprint('/post', __name__, url_prefix='/')
 
 digestAuth = HTTPDigestAuth()
 tokenAuth = HTTPTokenAuth(scheme='Bearar')
 
-@post_bp.route('post/',methods=['GET'])
+@post_bp.route('posts/',methods=['GET'])
+@login_required
 def posts():
     return todos
 
