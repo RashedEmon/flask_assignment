@@ -24,7 +24,7 @@ def token_login_required(func):
                 "message": "Bearer Token is missing!",
                 "data": None,
                 "error": "Unauthorized"
-            })
+            }),401
         
         try:
             data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
