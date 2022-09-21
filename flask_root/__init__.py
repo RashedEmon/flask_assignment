@@ -12,15 +12,21 @@ from flask_root.post import post_bp
 from flask_root.dashboard import dashboardbp
 
 #This is the entry point of the application.
-def create_app(test_config=None):
+def create_app():
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True,template_folder='templates')
 
-    print(os.getenv('SECRET_KEY'))
-
+    
+    secret_key = secrets.token_urlsafe(16)
     if os.getenv('SECRET_KEY') == None:
-        os.environ['SECRET_KEY'] = secrets.token_urlsafe(16)
+        os.environ['SECRET_KEY'] = secret_key
 
+    app.config.from_mapping(
+        {
+            'SECRET_KEY': os.getenv('SECRET_KEY')
+        }
+    )
+    print(os.getenv('SECRET_KEY'))
 
     # ensure the instance folder exists
     try:

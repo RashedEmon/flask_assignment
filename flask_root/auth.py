@@ -7,6 +7,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager,login_user,login_required,current_user,logout_user
+import jwt
 #Local application specific imports.
 from flask_root.data import users
 #create a login manager instance
@@ -61,9 +62,20 @@ def login():
                 user_obj=user
                 break
         if user_obj and check_password_hash(user_obj.password,password):
-            user_obj.authenticated=True
-            login_user(user_obj)
-            return redirect(url_for('/user/dashboard.dashboard'))
+            try:
+                user_obj.authenticated=True
+                login_user(user_obj)
+                token=jwt.encode(
+                    {'username': user_obj.username},
+                    key=current_app.config['SECRET_KEY'],
+                    algorithm="HS256"
+                )
+                resp=make_response(redirect(url_for('/user/dashboard.dashboard')),)
+                resp.set_cookie('token',token)
+                return resp
+            except Exception:
+                pass
+                
         else:
             response = make_response(redirect(url_for('/login.login')))
             response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'

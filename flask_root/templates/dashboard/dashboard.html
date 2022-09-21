@@ -2,6 +2,10 @@
 {% include 'header.html' %}
 {% block main %}
 <div class="w-full md:w-11/12 lg:w-9/12 m-auto">
+  <div id="popup">
+    
+  </div>
+  {% if todos |count>0 %}
   <div class="text-[20px] bg-blue-500 px-1 mt-10 text-center">Todo</div>
   <table class="w-full">
     <tr>
@@ -9,6 +13,18 @@
       <th>Title</th>
       <th>Status</th>
     </tr>
+    {% for todo in todos %}
+      <tr class="cursor-pointer todo" data-id={{ todo.id }}>
+        <th>{{ todo.id }}</th>
+        <th>{{ todo.title }}</th>
+        <th>{{ todo.status }}</th>
+      </tr>
+    {% endfor %}
   </table>
+  {% endif %}
 </div>
 {% endblock main %}
+
+
+
+
