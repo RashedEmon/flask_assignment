@@ -15,13 +15,13 @@ post_bp = Blueprint('/post', __name__, url_prefix='/')
 
 digestAuth = HTTPDigestAuth()
 tokenAuth = HTTPTokenAuth(scheme='Bearar')
-
+#handle get all post request. return all todo
 @post_bp.route('posts/',methods=['GET'])
 @login_required
 def posts():
     return todos
 
-
+#return a todo by id
 @post_bp.route('post/<id>',methods=['GET'])
 @token_login_required
 def postById(id):

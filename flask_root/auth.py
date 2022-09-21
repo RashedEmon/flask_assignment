@@ -89,6 +89,7 @@ def login():
         response.headers['Pragma'] = 'no-cache'
         return response
 
+#handle logout action
 @bp.route('/logout')
 @login_required
 def logout():

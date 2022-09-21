@@ -28,3 +28,7 @@ todos = [
         },
     ]
 
+basicAuthUsers = {
+    "emon": generate_password_hash("rashed"),
+    "basar": generate_password_hash("khademul")
+}

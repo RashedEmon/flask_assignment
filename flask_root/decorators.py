@@ -5,6 +5,7 @@ import jwt
 #Local application specific imports.
 from flask_root.data import users
 
+#custom decorators to ensure token authorization
 def token_login_required(func):
     @wraps(func)
     def wrapper(*args,**kwargs):
