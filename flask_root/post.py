@@ -25,7 +25,6 @@ def posts():
 @post_bp.route('post/<id>',methods=['GET'])
 @token_login_required
 def postById(id):
-    print(type(id))
     for todo in todos:
         if todo['id'] == id:
             return todo

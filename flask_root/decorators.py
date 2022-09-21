@@ -9,7 +9,6 @@ def token_login_required(func):
     @wraps(func)
     def wrapper(*args,**kwargs):
         id = kwargs.get('id',None)
-        print(id)
         token = None
         if "Authorization" in request.headers:
             scheme,token = request.headers["Authorization"].split(" ")
@@ -20,7 +19,6 @@ def token_login_required(func):
                 "error": "Unauthorized"
             }), 401
         
-        print(token)
         if scheme != 'Bearer':
             return jsonify({
                 "message": "Bearer Token is missing!",
@@ -30,11 +28,9 @@ def token_login_required(func):
 
         try:
             data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
-            print(data)
             temp_user = None
             for user in users:
                 if user.username == data["username"]:
-                    print(data["username"])
                     temp_user=user
             current_user=temp_user
             if current_user is None:

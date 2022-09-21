@@ -9,7 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager,login_user,login_required,current_user,logout_user
 import jwt
 #Local application specific imports.
-from flask_root.data import users
+from flask_root.data import users,basicAuthUsers
 #create a login manager instance
 login_manager = LoginManager()
 
@@ -17,11 +17,7 @@ login_manager = LoginManager()
 #create blue print
 bp = Blueprint('/login', __name__, url_prefix='/')
 
-#hard coded data storage for basic auth
-basicAuthUsers = {
-    "emon": generate_password_hash("rashed"),
-    "basar": generate_password_hash("khademul")
-}
+
 
 #create basic auth instance
 basicAuth = HTTPBasicAuth()
@@ -54,7 +50,6 @@ def login():
     if request.method == 'POST':
         username= request.form['username']
         password = request.form['password']
-        print(username,password)
         user_obj=None
         for user in users:
             # print(user.username)
@@ -84,7 +79,6 @@ def login():
 
     if request.method == 'GET':
         curr_user = current_user
-        print(curr_user)
         try:
             if curr_user.authenticated:
                 return redirect(url_for('/user/dashboard.dashboard'))
@@ -103,7 +97,3 @@ def logout():
     logout_user()
     return render_template('auth/login.html')
 
-@bp.route('/hi')
-@login_required
-def sayHi():
-    return "Hi"
