@@ -56,7 +56,7 @@
       const parts = value.split(`; ${name}=`);
       if (parts.length === 2) return parts.pop().split(';').shift();
     }
-    createPopUp=(todo)=>{
+    const createPopUp=(todo)=>{
       return `
       <table class="w-full" id="pop">
         <tr>
@@ -71,6 +71,27 @@
         </tr>
       </table>
       `
+    }
+    const createTodoList=(data)=>{
+      res = `
+      <div class="text-[20px] bg-blue-500 px-1 mt-10 text-center">Todo</div>
+      <table class="w-full">
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Status</th>
+        </tr>
+      `
+      Object.values(data).forEach((todo)=>{
+        res+=`
+        <tr class="cursor-pointer todo" data-id=${todo.id}>
+          <th>${todo.id}</th>
+          <th>${todo.title}</th>
+          <th>${todo.status}</th>
+        </tr>
+        `
+      })
+      return res + '</table>'
     }
     window.onload = ()=>{
       var todos=document.getElementsByClassName('todo')
@@ -94,6 +115,20 @@
           .catch((err)=> console.log(err))
         })
       })
+
+
+      todo_table = document.getElementById('todo-list')
+      fetch('http://127.0.0.1:5000/posts',{
+        headers: {
+          'Authorization':'Bearer '+getCookie('token')
+        }
+      })
+      .then(res=>res.json())
+      .then((data)=>{
+        
+        todo_table.innerHTML=createTodoList(data)
+      })
+      .catch(err=> console.log(err))
     }
   </script>
 </body>

@@ -9,7 +9,6 @@ from flask_root.data import users
 def token_login_required(func):
     @wraps(func)
     def wrapper(*args,**kwargs):
-        id = kwargs.get('id',None)
         token = None
         if "Authorization" in request.headers:
             scheme,token = request.headers["Authorization"].split(" ")
@@ -26,7 +25,7 @@ def token_login_required(func):
                 "data": None,
                 "error": "Unauthorized"
             })
-
+        
         try:
             data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
             temp_user = None

@@ -26,7 +26,6 @@ def create_app():
             'SECRET_KEY': os.getenv('SECRET_KEY')
         }
     )
-    print(os.getenv('SECRET_KEY'))
 
     # ensure the instance folder exists
     try:

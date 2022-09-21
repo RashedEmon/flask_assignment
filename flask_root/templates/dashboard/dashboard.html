@@ -6,21 +6,9 @@
     
   </div>
   {% if todos |count>0 %}
-  <div class="text-[20px] bg-blue-500 px-1 mt-10 text-center">Todo</div>
-  <table class="w-full">
-    <tr>
-      <th>Id</th>
-      <th>Title</th>
-      <th>Status</th>
-    </tr>
-    {% for todo in todos %}
-      <tr class="cursor-pointer todo" data-id={{ todo.id }}>
-        <th>{{ todo.id }}</th>
-        <th>{{ todo.title }}</th>
-        <th>{{ todo.status }}</th>
-      </tr>
-    {% endfor %}
-  </table>
+  <div id="todo-list">
+    
+  </div>
   {% endif %}
 </div>
 {% endblock main %}
