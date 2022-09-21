@@ -13,16 +13,15 @@ from flask_root.decorators import token_login_required
 
 post_bp = Blueprint('/post', __name__, url_prefix='/')
 
-digestAuth = HTTPDigestAuth()
-tokenAuth = HTTPTokenAuth(scheme='Bearar')
+
 #handle get all post request. return all todo
-@post_bp.route('posts/',methods=['GET'])
+@post_bp.route('/posts/',methods=['GET'])
 @token_login_required
 def posts():
     return jsonify(todos)
 
 #return a todo by id
-@post_bp.route('post/<id>',methods=['GET'])
+@post_bp.route('/post/<id>',methods=['GET'])
 @token_login_required
 def postById(id):
     for todo in todos:

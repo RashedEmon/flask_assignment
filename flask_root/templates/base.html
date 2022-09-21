@@ -120,14 +120,22 @@
       })
     }
     window.onload = ()=>{
+      console.log(getCookie('token'))
       todo_table = document.getElementById('todo-list')
       fetch('http://127.0.0.1:5000/posts',{
         headers: {
           'Authorization':'Bearer '+getCookie('token')
         }
       })
-      .then(res=>res.json())
+      .then(res=>{
+        try{
+          return res.json()
+        }catch{ 
+          console.log('data is not json')
+        }
+      })
       .then((data)=>{
+        console.log(data)
         todo_table.innerHTML=createTodoList(data)
         showPopUp()
       })

@@ -40,7 +40,9 @@ def token_login_required(func):
                 "error": "Unauthorized"
             }, 401
             if not current_user.active:
-                abort(403)
+                return jsonify({
+                    "message": "user is not active"
+                })
         except Exception as e:
             return {
                 "message": "Something went wrong",
